@@ -1,6 +1,7 @@
 import datetime
 
 from django.db import models
+from django.db.models import Max
 from django.utils import timezone
 
 
@@ -17,6 +18,19 @@ class Question(models.Model):
     def age(self):
         age = timezone.now() - self.pub_date
         return f"{age.days} days ago"
+
+    def get_max_choice(self):
+        choices = Choice.objects.filter(question=self)
+        max_choice = choices.order_by("-votes").first()
+        total_votes = 0
+        for choice in choices:
+            total_votes += choice.votes
+        if max_choice is None:
+            return "Aucun choix"
+        elif total_votes == 0:
+            return "Aucun vote"
+        else:
+            return f"{max_choice}: {((max_choice.votes / total_votes) * 100):.1f} %"
 
 
 class Choice(models.Model):

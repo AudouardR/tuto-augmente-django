@@ -1,7 +1,7 @@
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a> ({{ question.pub_date }})</li>
+        <li>{{ question.id }}) <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a> ({{ question.pub_date }})</li>
     {% endfor %}
     </ul>
 {% else %}

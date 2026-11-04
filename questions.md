@@ -4,9 +4,6 @@
 ## 2.2.1 Exercice d'administation
 
 
-
-### 2.2.2.2. Questions
-
 1. 
 
 In [5]: from django.utils import timezone
@@ -109,6 +106,7 @@ Out[54]: <Choice: Bof>
 
 In [55]: q6.save()
 
+### 2.2.2.2. Questions
 
 8) 
 

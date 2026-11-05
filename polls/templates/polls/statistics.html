@@ -1,0 +1,8 @@
+<h1>Statistiques</h1>
+<ul>
+    <li>Nombre total de sondages enregistrés : {{ nb_polls }}</li>
+    <li>Nombre total de choix possibles : {{ total_choices }} </li>
+    <li>Nombre total de votes : {{ total_votes }} </li>
+    <li>Moyenne du nombre de votes par sondage : {{ average_votes }}</li>
+    <li>Dernière question enregistrée : "{{ latest_question.question_text }}" ({{ latest_question.pub_date }})</li>
+</ul>

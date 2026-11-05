@@ -1,3 +1,4 @@
+from django.db.models import Sum, Max
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -29,6 +30,32 @@ def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     return render(request, "polls/detail.html", {"question": question})
 
+@require_GET
+def statistics(request):
+    """
+    Affiche une page de statistiques sur les sondages
+    :param request: Requête
+    :return: statistics.html
+    """
+    latest_question_list = Question.objects.order_by("-pub_date")[:5]
+    nb_polls = latest_question_list.count()
+    total_choices = 0
+    total_votes = 0
+    for question in latest_question_list:
+        result_votes = question.choice_set.aggregate(total=Sum('votes'))
+        total_votes += result_votes["total"]
+        total_choices += question.choice_set.count()
+    average_votes = total_votes / nb_polls if nb_polls != 0 else 0
+    latest_question = latest_question_list.first()
+    context = {
+        "latest_question_list": latest_question_list,
+        "nb_polls": nb_polls,
+        "total_votes": total_votes,
+        "total_choices": total_choices,
+        "average_votes": average_votes,
+        "latest_question": latest_question
+    }
+    return render(request, "polls/statistics.html", context)
 
 @require_GET
 def results(request, question_id):

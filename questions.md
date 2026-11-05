@@ -106,6 +106,16 @@ Out[54]: <Choice: Bof>
 
 In [55]: q6.save()
 
+3) 
+
+In [58]: q6  
+Out[58]: <Question: Comment ça va aujourd'hui ?>
+
+In [59]: q6.choice_set.all()  
+Out[59]: <QuerySet [<Choice: Très bien>, <Choice: Plutôt bien>, <Choice: Bof>]>
+
+4) 
+
 ### 2.2.2.2. Questions
 
 8) 

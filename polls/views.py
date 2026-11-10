@@ -1,9 +1,13 @@
 from django.db.models import Sum, Max, F
+from django.middleware.gzip import re_accepts_gzip
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils import timezone
 from django.views.decorators.http import require_GET, require_POST
+
+from .forms import QuestionForm
 
 from .models import Choice, Question
 
@@ -95,3 +99,25 @@ def vote(request, question_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
 
+@require_GET
+def create_question(request):
+    form = QuestionForm()
+    return render(request, "polls/question.html", {"form": form})
+
+@require_POST
+def save_question(request):
+    form = QuestionForm(request.POST)
+
+    if form.is_valid():
+        question = Question.objects.create(question_text=form.cleaned_data["question_text"], pub_date=timezone.now())
+
+        for i in range(5):
+            choice_text = form.cleaned_data["choice" + str(i+1)]
+
+            if choice_text != "":
+                Choice.objects.create(question = question, choice_text = choice_text)
+
+        return HttpResponseRedirect(reverse("polls:index"))
+
+    else:
+        return render(request, "polls/question.html", {"form": form})

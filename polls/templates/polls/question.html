@@ -1,0 +1,14 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+
+<h1>Ajouter un sondage</h1>
+
+<form action="{% url 'polls:save_question' %}" method="post">
+    {% csrf_token %}
+
+    {% include "polls/form_snippet.html" %}
+
+    <button type="submit">Créer le sondage</button>
+</form>
+<a href="javascript:history.back()">Retour aux sondages</a>

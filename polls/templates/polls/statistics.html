@@ -1,8 +1,12 @@
-{% load static %}
+{% extends "base.html" %}
 
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+{% block title %}Sondages - Statistiques{% endblock %}
 
-<h1>Statistiques</h1>
+{% block header %}
+    <h1>Statistiques</h1>
+{% endblock %}
+
+{% block main %}
 <ul>
     <li>Nombre total de sondages enregistrés : {{ nb_polls }}</li>
     <li>Nombre total de choix possibles : {{ total_choices }} </li>
@@ -10,3 +14,4 @@
     <li>Moyenne du nombre de votes par sondage : {{ average_votes }}</li>
     <li>Dernière question enregistrée : "{{ latest_question.question_text }}" ({{ latest_question.pub_date }})</li>
 </ul>
+{% endblock %}

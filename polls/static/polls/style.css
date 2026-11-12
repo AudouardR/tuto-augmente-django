@@ -3,6 +3,14 @@ body {
     background-size: cover;
 }
 
+header {
+    background: url("images/header.png") no-repeat;
+    background-size: 100% 100px;
+    color: #fff;
+    height: 100px;
+    padding: 8px;
+}
+
 li a {
     color: green;
 }
